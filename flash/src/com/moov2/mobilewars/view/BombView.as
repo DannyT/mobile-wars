@@ -1,5 +1,7 @@
 package com.moov2.mobilewars.view
 {
+	import com.moov2.mobilewars.vo.BombVO;
+	
 	import flash.display.Sprite;
 	import flash.text.TextField;
 	
@@ -8,9 +10,11 @@ package com.moov2.mobilewars.view
 		public var usernameText : TextField;
 		public var countDownText : TextField;
 		
-		public function set countDown(value:int):void
+		public function set bomb(value:BombVO):void
 		{
-			this.countDownText.text = value < 10 ? "0" + value.toString() : value.toString() ;
+			this.usernameText.text = value.user;
+			var timeLeft:int = value.timer <= 0 ? 0 : value.timer;
+			this.countDownText.text = timeLeft < 10 ? "0" + timeLeft.toString() : timeLeft.toString() ;
 		}
 		
 		public function BombView()

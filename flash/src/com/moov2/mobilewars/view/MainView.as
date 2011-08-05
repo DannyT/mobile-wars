@@ -1,12 +1,16 @@
 package com.moov2.mobilewars.view
 {
+	import com.moov2.mobilewars.vo.BombVO;
+	
 	import flash.display.Sprite;
+	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	
 	public class MainView extends Sprite
 	{
 		private static const BOMB_COUNT:int = 4;
-		private static const MAX_TIMER:int = 10;
+		private static const MAX_TIMER:int = 20;
+		private static const MIN_TIMER:int = 5;
 		
 		private var _bombs : Array;
 		private var _bombViews : Array;
@@ -19,38 +23,59 @@ package com.moov2.mobilewars.view
 			this._bombs = [];
 			this._bombViews = [];
 			createBombs();
-			createMainView();
+			createBombViews();
 		}
 		
 		private function createBombs():void
 		{
-			var bombView:BombView;
+			// TODO: extract to service
 			for(var i:int = 0; i< BOMB_COUNT; i++)
 			{
-				this._bombs.push(MAX_TIMER);
-				bombView = new BombView();
-				bombView.countDown = this._bombs[i];
-				bombView.y = bombView.height * this._bombViews.length;
-				this._bombViews.push(bombView);
-				this.addChild(bombView);
+				this._bombs.push(new BombVO("", "DannyT", getRandomTimer()));
 			}
 		}
 		
-		private function createMainView() : void
+		private function getRandomTimer():int
+		{
+			return (Math.floor(Math.random() * MAX_TIMER) + MIN_TIMER);	
+		}
+		
+		private function createBombViews() : void
+		{
+			var bombView:BombView;
+			for(var i:int = 0; i < this._bombs.length; i++)
+			{
+				bombView = new BombView();
+				bombView.y = bombView.height * this._bombViews.length;
+				bombView.addEventListener(MouseEvent.CLICK, onBombClick);
+				this._bombViews.push(bombView);
+				this.addChild(bombView);
+			}
+			updateBombs();
+		}
+		
+		private function onBombClick(e:MouseEvent):void
 		{
 			
 		}
 		
 		public function setTime(timeUpdate:Number):void
 		{
-			if((timeUpdate - this._lastTime) > 1000) // is difference greater than 1000?
+			if((timeUpdate - this._lastTime) > 1000) // is difference greater than 1 second?
 			{
-				for(var i:int = 0; i < BOMB_COUNT; i++)
-				{
-					this._bombs[i]--;
-					BombView(this._bombViews[i]).countDown = this._bombs[i]; 
-				}
-			   this._lastTime = timeUpdate;
+				updateBombs();
+			   	this._lastTime = timeUpdate;
+			}
+		}
+		
+		private function updateBombs():void
+		{
+			var bomb:BombVO;
+			for(var i:int = 0; i < this._bombs.length; i++)
+			{
+				bomb = this._bombs[i];
+				bomb.timer --;
+				BombView(this._bombViews[i]).bomb = bomb; 
 			}
 		}
 	}

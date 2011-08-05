@@ -18,9 +18,9 @@ package
 		{
 			this._gameLoop = new Timer(50);
 			this._gameLoop.addEventListener(TimerEvent.TIMER, onGameUpdate);
-			this._gameLoop.start();
 			this._mainView = new MainView();
 			this.addChild(_mainView);
+			this._gameLoop.start();
 		}
 		
 		private function onGameUpdate(e:Event):void
