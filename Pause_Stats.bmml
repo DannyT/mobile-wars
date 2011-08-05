@@ -1,0 +1,56 @@
+<mockup version="1.0" skin="sketch" measuredW="825" measuredH="553" mockupW="282" mockupH="510">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::iPhone" x="543" y="43" w="-1" h="-1" measuredW="282" measuredH="510" zOrder="0" locked="true" isInGroup="-1">
+      <controlProperties>
+        <bgPattern>allWhite</bgPattern>
+        <topBar>false</topBar>
+      </controlProperties>
+    </control>
+    <control controlID="51" controlTypeID="com.balsamiq.mockups::Canvas" x="570" y="127" w="227" h="343" measuredW="100" measuredH="70" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <backgroundAlpha>1</backgroundAlpha>
+        <color>0</color>
+      </controlProperties>
+    </control>
+    <control controlID="52" controlTypeID="com.balsamiq.mockups::Button" x="602" y="377" w="164" h="38" measuredW="76" measuredH="28" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>MainScreen%26bm%3BMainScreen.bmml%26bm%3BMainScreen.bmml%26bm%3BMainScreen.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2259%2C334%2C223%2C372%22%20href%3D%22MainScreen.bmml%22%20alt%3D%22MainScreen%22%20id%3D%2252%22/%3E</map>
+        <text>Resume</text>
+      </controlProperties>
+    </control>
+    <control controlID="53" controlTypeID="com.balsamiq.mockups::Button" x="602" y="417" w="164" h="38" measuredW="48" measuredH="28" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Exit</text>
+      </controlProperties>
+    </control>
+    <control controlID="54" controlTypeID="com.balsamiq.mockups::Canvas" x="579" y="141" w="209" h="187" measuredW="100" measuredH="70" zOrder="4" locked="false" isInGroup="-1"/>
+    <control controlID="55" controlTypeID="com.balsamiq.mockups::Label" x="587" y="151" w="-1" h="-1" measuredW="94" measuredH="21" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Hits%20received%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="56" controlTypeID="com.balsamiq.mockups::Label" x="587" y="173" w="-1" h="-1" measuredW="87" measuredH="21" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Hits%20inflicted%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="57" controlTypeID="com.balsamiq.mockups::Label" x="587" y="218" w="-1" h="-1" measuredW="91" measuredH="21" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Overall%20Rank%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="58" controlTypeID="com.balsamiq.mockups::Label" x="587" y="195" w="-1" h="-1" measuredW="69" measuredH="21" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Launched%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="59" controlTypeID="com.balsamiq.mockups::Button" x="602" y="337" w="164" h="38" measuredW="121" measuredH="28" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <href>MainScreen%26bm%3BMainScreen.bmml%26bm%3BMainScreen.bmml%26bm%3BMainScreen.bmml</href>
+        <map>%3Carea%20shape%3D%22rect%22%20coords%3D%2259%2C294%2C223%2C332%22%20href%3D%22MainScreen.bmml%22%20alt%3D%22MainScreen%22%20id%3D%2259%22/%3E</map>
+        <text>Full%20stats%20online</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
