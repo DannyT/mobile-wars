@@ -7,6 +7,8 @@ package com.moov2.mobilewars.view
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
+	import flash.text.TextField;
 	
 	public class ReturnView extends Sprite
 	{
@@ -38,9 +40,50 @@ package com.moov2.mobilewars.view
 			this.clockFace.height = this.clockFace.width;
 			this.clockFace.x = (stage.stageWidth / 2)- (this.clockFace.width/2);
 			this.clockFace.y = (stage.stageHeight / 2)- (this.clockFace.height/2);
-			
 			this.clockSegment.x = this.clockFace.x + (this.clockFace.width /2);
 			this.clockSegment.y = this.clockFace.y + (this.clockFace.height /2);
+			setupSeconds();
+		}
+		
+		private function setupSeconds():void
+		{
+			var midPoint:Point = new Point(this.clockSegment.x - 10, this.clockSegment.y -10);
+			var radius:int = (this.clockFace.width / 2) + 20;
+			var tf:TextField;
+			var points : Array = getPointsOnCircle(midPoint, radius, Main.MAX_TIMER);
+
+			for(var i:int=0; i<points.length; i++)
+			{
+				tf = new TextField();
+				tf.text = (i+1).toString();
+				tf.x = points[i].x;
+				tf.y = points[i].y;
+				this.addChild(tf);
+			}
+		}
+		
+		private function getPointsOnCircle( center:Point, radius:Number, n:Number = 10 ) : Array
+		{
+			var alpha:Number = Math.PI * 2 / n;
+			var points:Array = new Array( n );
+			var topY:int =stage.stageHeight;
+			var topYindex:int = 0;
+			var i:int = -1;
+			while( ++i < n )
+			{
+				var theta:Number = alpha * i;
+				var pointOnCircle:Point = new Point( Math.cos( theta ) * radius, Math.sin( theta ) * radius );
+				points[ i ] = center.add( pointOnCircle );
+				if(points[i].y < topY)
+				{
+					topY = points[i].y;
+					topYindex = i;
+				}
+			}
+			// reorder array so it starts from top of circle
+			var front:Array = points.splice(topYindex+1, points.length-1);
+			points = front.concat(points);
+			return points;
 		}
 		
 		public function timeTick():void
@@ -48,13 +91,13 @@ package com.moov2.mobilewars.view
 			const TWO_PI:Number = Math.PI * 2;
 			
 			// level of detail of circle
-			var resolution:Number = 50;
+			var resolution:Number = 90;
 			// percent of circle to fill
 			this._currentTime = Main.GetRandomTimer();
 			var segmentPercent:Number = this._currentTime / Main.MAX_TIMER;
 			var radius:Number = (this.clockFace.width/2) - 10;
 			// angle as a number of steps towards a full circle
-			var angle:int = Math.ceil(resolution*segmentPercent);
+			var angle:Number = Math.ceil(resolution*segmentPercent);
 			// size of each step
 			var step:Number = TWO_PI / resolution;
 			// drawing points 

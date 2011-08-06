@@ -13,7 +13,14 @@ package
 	
 	public class Main extends Sprite
 	{
+		/**
+		 * Maximum possible time a bomb can have when new or being returned
+		 */
 		public static const MAX_TIMER:int = 20;
+		
+		/**
+		 * Minimum time a bomb can have when new or being returned
+		 */
 		public static const MIN_TIMER:int = 5;
 		
 		private var _mainView : MainView;
@@ -28,7 +35,7 @@ package
 		
 		public static function GetRandomTimer():int
 		{
-			return (Math.floor(Math.random() * MAX_TIMER) + MIN_TIMER);	
+			return (Math.floor(Math.random() * (MAX_TIMER - MIN_TIMER + 1)) + MIN_TIMER); 	
 		}
 		
 		public function Main()
@@ -72,7 +79,6 @@ package
 		
 		private function onBombTap(bomb:BombVO):void
 		{
-			// show throwback view
 			this._returnView.bomb = bomb;
 			this.addChild(this._returnView);
 			this._currentView = RETURN_VIEW;
@@ -83,7 +89,6 @@ package
 			this.removeChild(this._returnView);
 			this._currentView = GAME_VIEW;
 			bomb.timer = GetRandomTimer();
-			this._mainView.timeTick();
 		}
 	}
 }
