@@ -1,13 +1,17 @@
 package com.moov2.mobilewars.view
 {
+	import com.moov2.mobilewars.event.BombEvent;
 	import com.moov2.mobilewars.vo.BombVO;
 	
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Matrix;
 	import flash.text.TextField;
 	
 	public class MainView extends Sprite
 	{
+		// TODO: extract config
 		private static const BOMB_COUNT:int = 4;
 		private static const MAX_TIMER:int = 20;
 		private static const MIN_TIMER:int = 5;
@@ -24,11 +28,12 @@ package com.moov2.mobilewars.view
 			this._bombViews = [];
 			createBombs();
 			createBombViews();
+			this.addEventListener(Event.ADDED_TO_STAGE, addedToStage);
 		}
 		
 		private function createBombs():void
 		{
-			// TODO: extract to service
+			// TODO: extract to service and object pool
 			for(var i:int = 0; i< BOMB_COUNT; i++)
 			{
 				this._bombs.push(new BombVO("", "DannyT", getRandomTimer()));
@@ -47,16 +52,27 @@ package com.moov2.mobilewars.view
 			{
 				bombView = new BombView();
 				bombView.y = bombView.height * this._bombViews.length;
-				bombView.addEventListener(MouseEvent.CLICK, onBombClick);
 				this._bombViews.push(bombView);
 				this.addChild(bombView);
 			}
 			updateBombs();
 		}
 		
-		private function onBombClick(e:MouseEvent):void
+		private function addedToStage(e:Event):void
 		{
-			
+			var scale:Number = stage.stageWidth / this._bombViews[0].width;
+			var bombView : BombView;
+
+			for(var i:int = 0; i< this._bombViews.length; i++)
+			{				
+				bombView = BombView(this._bombViews[i]);
+				bombView.y = (bombView.height * scale) * i;
+
+				var tm:Matrix = new Matrix();
+				tm.scale(scale, scale);
+				tm.translate(bombView.x, bombView.y);
+				bombView.transform.matrix = tm;
+			}
 		}
 		
 		public function setTime(timeUpdate:Number):void
