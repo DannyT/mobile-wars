@@ -3,8 +3,11 @@ package com.moov2.mobilewars.view
 	import com.moov2.mobilewars.event.BombEvent;
 	import com.moov2.mobilewars.vo.BombVO;
 	
+	import fl.motion.Color;
+	
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.geom.ColorTransform;
 	import flash.text.TextField;
 	
 	public class BombView extends Sprite
@@ -20,6 +23,7 @@ package com.moov2.mobilewars.view
 			this.usernameText.text = value.user;
 			var timeLeft:int = value.timer <= 0 ? 0 : value.timer;
 			this.countDownText.text = timeLeft < 10 ? "0" + timeLeft.toString() : timeLeft.toString() ;
+			(timeLeft == 0) ? exploded() : normal();
 		}
 		
 		public function BombView()
@@ -33,6 +37,17 @@ package com.moov2.mobilewars.view
 			var bombEvent:BombEvent = new BombEvent(BombEvent.TAPPED);
 			bombEvent.bomb = this._bomb;
 			this.dispatchEvent(bombEvent);
+		}
+		
+		private function normal():void
+		{
+			this.transform.colorTransform = new ColorTransform();
+		}
+		private function exploded():void
+		{
+			var c:Color=new Color();  
+			c.setTint(0xff0000, 0.8);
+			this.transform.colorTransform=c;
 		}
 	}
 }
