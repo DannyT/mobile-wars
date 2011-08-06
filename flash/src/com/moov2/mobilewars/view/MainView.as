@@ -13,19 +13,18 @@ package com.moov2.mobilewars.view
 	{
 		// TODO: extract config
 		private static const BOMB_COUNT:int = 4;
-		private static const MAX_TIMER:int = 20;
-		private static const MIN_TIMER:int = 5;
 		
+		private var _bombTapCallback : Function;
 		private var _bombs : Array;
 		private var _bombViews : Array;
 		private var _lastTime : Number;
 		
-		public function MainView()
+		public function MainView(bombTapCallback:Function)
 		{
 			super();
-			this._lastTime = 0;
 			this._bombs = [];
 			this._bombViews = [];
+			this._bombTapCallback = bombTapCallback;
 			createBombs();
 			createBombViews();
 			this.addEventListener(Event.ADDED_TO_STAGE, addedToStage);
@@ -33,24 +32,21 @@ package com.moov2.mobilewars.view
 		
 		private function createBombs():void
 		{
-			// TODO: extract to service and object pool
+			// TODO: extract to service and pool bomb objects
 			for(var i:int = 0; i< BOMB_COUNT; i++)
 			{
-				this._bombs.push(new BombVO("", "DannyT", getRandomTimer()));
+				this._bombs.push(new BombVO("", "DannyT", Main.GetRandomTimer()));
 			}
 		}
 		
-		private function getRandomTimer():int
-		{
-			return (Math.floor(Math.random() * MAX_TIMER) + MIN_TIMER);	
-		}
+		
 		
 		private function createBombViews() : void
 		{
 			var bombView:BombView;
 			for(var i:int = 0; i < this._bombs.length; i++)
 			{
-				bombView = new BombView();
+				bombView = new BombView(this._bombTapCallback);
 				bombView.y = bombView.height * this._bombViews.length;
 				this._bombViews.push(bombView);
 				this.addChild(bombView);
@@ -60,6 +56,7 @@ package com.moov2.mobilewars.view
 		
 		private function addedToStage(e:Event):void
 		{
+			this.removeEventListener(Event.ADDED_TO_STAGE, addedToStage);
 			var scale:Number = stage.stageWidth / this._bombViews[0].width;
 			var bombView : BombView;
 
@@ -75,13 +72,9 @@ package com.moov2.mobilewars.view
 			}
 		}
 		
-		public function setTime(timeUpdate:Number):void
+		public function timeTick():void
 		{
-			if((timeUpdate - this._lastTime) > 1000) // is difference greater than 1 second?
-			{
-				updateBombs();
-			   	this._lastTime = timeUpdate;
-			}
+			updateBombs();
 		}
 		
 		private function updateBombs():void

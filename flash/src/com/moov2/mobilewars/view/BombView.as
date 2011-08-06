@@ -13,7 +13,7 @@ package com.moov2.mobilewars.view
 	public class BombView extends Sprite
 	{
 		private var _bomb : BombVO;
-		
+		private var _bombTapCallback : Function;
 		public var usernameText : TextField;
 		public var countDownText : TextField;
 		
@@ -26,23 +26,24 @@ package com.moov2.mobilewars.view
 			(timeLeft == 0) ? exploded() : normal();
 		}
 		
-		public function BombView()
+		public function BombView(bombTapCallback:Function)
 		{
-			super();
+			this.mouseChildren = false;
+			this._bombTapCallback = bombTapCallback;
 			this.addEventListener(MouseEvent.CLICK, onClick);
+			super();
 		}
 		
 		private function onClick(e:MouseEvent):void
 		{
-			var bombEvent:BombEvent = new BombEvent(BombEvent.TAPPED);
-			bombEvent.bomb = this._bomb;
-			this.dispatchEvent(bombEvent);
+			this._bombTapCallback(this._bomb);
 		}
 		
 		private function normal():void
 		{
 			this.transform.colorTransform = new ColorTransform();
 		}
+		
 		private function exploded():void
 		{
 			var c:Color=new Color();  
