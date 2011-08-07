@@ -8,6 +8,7 @@ package
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
+	import flash.text.Font;
 	import flash.utils.Timer;
 	import flash.utils.getTimer;
 	
@@ -21,7 +22,7 @@ package
 		/**
 		 * Minimum time a bomb can have when new or being returned
 		 */
-		public static const MIN_TIMER:int = 5;
+		public static const MIN_TIMER:int = 4;
 		
 		private var _mainView : MainView;
 		private var _returnView : ReturnView;
@@ -80,6 +81,7 @@ package
 		private function onBombTap(bomb:BombVO):void
 		{
 			this._returnView.bomb = bomb;
+			this._returnView.timeTick();
 			this.addChild(this._returnView);
 			this._currentView = RETURN_VIEW;
 		}

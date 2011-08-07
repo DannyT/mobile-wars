@@ -9,6 +9,9 @@ package com.moov2.mobilewars.view
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.text.TextField;
+	import flash.text.TextFormat;
+	
+	import net.blog2t.text.FixedTextField;
 	
 	public class ReturnView extends Sprite
 	{
@@ -19,10 +22,12 @@ package com.moov2.mobilewars.view
 		public var clockFace : Sprite;
 		public var clockSegment : Shape;
 		public var bomb:BombVO;
+		public var sampleTextField:TextField;
 		
 		public function ReturnView( bombReturnCallback:Function )
 		{
 			super();
+			this.sampleTextField.x = -1000;
 			this._bombReturnCallback = bombReturnCallback;
 			this.clockSegment = new Shape();
 			this.addChild(clockSegment);
@@ -47,17 +52,19 @@ package com.moov2.mobilewars.view
 		
 		private function setupSeconds():void
 		{
-			var midPoint:Point = new Point(this.clockSegment.x - 10, this.clockSegment.y -10);
+			var midPoint:Point = new Point(this.clockSegment.x, this.clockSegment.y);
 			var radius:int = (this.clockFace.width / 2) + 20;
-			var tf:TextField;
+			var tf:FixedTextField;
+			var textFormat : TextFormat = new TextFormat("Digital");
+			
 			var points : Array = getPointsOnCircle(midPoint, radius, Main.MAX_TIMER);
 
 			for(var i:int=0; i<points.length; i++)
 			{
-				tf = new TextField();
+				tf = new FixedTextField(sampleTextField);
 				tf.text = (i+1).toString();
-				tf.x = points[i].x;
-				tf.y = points[i].y;
+				tf.x = points[i].x - (tf.width/2);
+				tf.y = points[i].y - (tf.height/2);
 				this.addChild(tf);
 			}
 		}
